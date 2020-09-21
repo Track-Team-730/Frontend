@@ -1,0 +1,4 @@
+[build]
+  publish = "build/"
+  command = "CI= npm run build"
+  environment = { NODE_ENV = "production", REACT_APP_CLIENT_ID = "lambda", REACT_APP_CLIENT_SECRET = "lambda"  }
