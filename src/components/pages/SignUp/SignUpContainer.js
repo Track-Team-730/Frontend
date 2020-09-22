@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { useHistory, Link } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import RenderSignUp from './RenderSignUp';
 import schema from './formSchema';
@@ -20,13 +21,13 @@ const initialValues = {
 // };
 
 const initialUsers = [];
-// const initialDisabled = true;
+const initialDisabled = true;
 
 const SignUpContainer = () => {
     //states
     const [users, setUsers] = useState(initialUsers);
-    const [formValues, handleChanges, resetForm] = useForm(initialValues);
-    // const [disabled, setDisabled] = useState(initialDisabled);
+    const [formValues, handleChanges, resetForm, formErrors] = useForm(initialValues);
+    const [disabled, setDisabled] = useState(initialDisabled);
     // const [formErrors, setFormErrors] = useState(initialFormErrors);
 
     //Validation
@@ -50,13 +51,15 @@ const SignUpContainer = () => {
     // };
 
     //Helpers
+    let history = useHistory();
 
     const postNewUser = newUser => {
       axiosWithAuth()
         .post('/createnewuser', newUser)
         .then(res => {
-          setUsers([...users, res.data]);
-          
+          localStorage.setItem('token', res.token);
+          history.push('/dashboard');
+          resetForm();
         })
         .catch(err => {
           console.log(err);
@@ -65,12 +68,12 @@ const SignUpContainer = () => {
 
     //side-effects
 
-    // useEffect(() => {
-    //   schema.isValid(formValues)
-    //     .then(valid => {
-    //       setDisabled(!valid);
-    //     });
-    // }, [formValues]);
+    useEffect(() => {
+      schema.isValid(formValues)
+        .then(valid => {
+          setDisabled(!valid);
+        });
+    }, [formValues]);
 
   const submitValues = evt => {
     evt.preventDefault();
@@ -89,6 +92,8 @@ const SignUpContainer = () => {
             values = {formValues}
             change = {handleChanges}
             submit = {submitValues}
+            errors = {formErrors}
+            disabled = {disabled}
         />
     </Container>
   );
