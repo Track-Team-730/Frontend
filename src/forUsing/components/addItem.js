@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 // import './App.css';
 import Container from '@material-ui/core/Container';
@@ -10,7 +10,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import * as yup from 'yup';
 import axios from 'axios';
 import axiosWithAuth from '../../state/utils/axiosWithAuth';
-import getData from '../../state/actions/userActions';
 
 import { option } from 'yargs';
 
@@ -50,15 +49,11 @@ const initialFormErrors = {
   product: '',
 };
 
-const AddItem = ({ getData, products, markets }) => {
+const AddItem = ({ products, markets }) => {
   const classes = useStyles();
 
   const [item, setItem] = useState(initialValues);
   const [errors, setFormErrors] = useState(initialFormErrors);
-
-  useEffect(() => {
-    getData();
-  }, [getData]);
 
   //validation
 
@@ -221,4 +216,4 @@ const mapStateToProps = state => {
     markets: state.dropdownMarkets,
   };
 };
-export default connect(mapStateToProps, { getData })(AddItem);
+export default connect(mapStateToProps, {})(AddItem);
