@@ -14,11 +14,14 @@ import UserPage from './forUsing/components/userPage';
 import PrivateRoute from './state/utils/privateRoute';
 import userReducer from './state/reducer/userReducer';
 
+import { NotFoundPage } from './components/pages/NotFound';
+import { ExampleListPage } from './components/pages/ExampleList';
+import { LoginPage } from './components/pages/Login';
+import { LandingPage } from './components/pages/Landing';
+import { SignUpPage } from './components/pages/SignUp';
+
 const store = createStore(userReducer, applyMiddleware(thunk, logger));
 
-// import { ExampleListPage } from './components/pages/ExampleList';
-// import { LoginPage } from './components/pages/Login';
-// import { LandingPage } from './components/pages/Landing';
 
 ReactDOM.render(
   <Router>
@@ -43,9 +46,14 @@ function App() {
   };
 
   return (
+
     <Router>
       <Switch>
         <PrivateRoute path="/userpage" component={UserPage} />
+        <Route path="/login" component={LoginPage} />
+        <Route path ="/signup" component={SignUpPage}></Route>
+        <Route path="/landing" component={LandingPage} />
+        <Route path="/" exact component={() => <LandingPage />} />
         {/* <Route path="/login" component={LoginPage} />
       <Route path="/landing" component={LandingPage} /> */}
         {/* any of the routes you need secured should be registered as SecureRoutes */}
