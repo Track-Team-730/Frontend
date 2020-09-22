@@ -23,6 +23,8 @@ import { SignUpPage } from './components/pages/SignUp';
 const store = createStore(userReducer, applyMiddleware(thunk, logger));
 
 
+
+
 ReactDOM.render(
   <Router>
     <Provider store={store}>
