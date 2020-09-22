@@ -68,7 +68,7 @@ const LoginContainer = () => {
           [e.target.name]: '',
         });
       })
-      /* if the validation is unsuccessful, we can set the error message to the message 
+      /* if the validation is unsuccessful, we can set the error message to the message
         returned from yup (that we created in our schema) */
       .catch(err => {
         setFormErrors({
@@ -85,11 +85,22 @@ const LoginContainer = () => {
   };
 
   const submit = () => {
+    const primaryEmail = formData.primaryEmail.trim(),
+      password = formData.password.trim();
     axiosWithAuth()
-      .post('/login', formData)
+      .post(
+        '/login',
+        `grant_type=password&username=${primaryEmail}&password=${password}`,
+        {
+          headers: {
+            Authorization: `Basic ${btoa('lambda:lambda')}`,
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        }
+      )
       .then(res => {
         console.log('onSubmit res:', res);
-        window.localStorage.setItem('token', res.data.payload);
+        window.localStorage.setItem('token', res.data.access_token);
         window.location = '/userpage';
       })
       .catch(err => console.log(err.response))
