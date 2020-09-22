@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import axiosWithAuth from '../../state/utils/axiosWithAuth';
 import { connect } from 'react-redux';
 import AddItem from './addItem';
 import PriceComparison from './priceComparison';
@@ -6,9 +7,21 @@ import UserItemsListed from './userItemsLIsted';
 import getData from '../../state/actions/userActions';
 
 const UserPage = ({ getData }) => {
+  const [userItemsList, setUserItemsList] = useState([]);
+
+  const getUserItems = () => {
+    axiosWithAuth()
+      .get('/user/items')
+      .then(res => {
+        setUserItemsList(res.data);
+      })
+      .catch(err => console.log(err));
+  };
+
   useEffect(() => {
+    getUserItems();
     getData();
-  }, [getData]);
+  }, []);
 
   return (
     <>
@@ -16,7 +29,10 @@ const UserPage = ({ getData }) => {
       <h2>User Page</h2>
       <AddItem />
       <PriceComparison />
-      <UserItemsListed />
+      <UserItemsListed
+        updateItems={setUserItemsList}
+        userItemsList={userItemsList}
+      />
     </>
   );
 };
