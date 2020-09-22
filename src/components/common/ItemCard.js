@@ -27,16 +27,18 @@ function ItemCard({ item, editButtons }) {
   return (
     <Card className={classes.root}>
       <CardActionArea>
-        <CardMedia className={classes.media} image="" title="" />
+        {/* <CardMedia className={classes.media} image="" title="" /> */}
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {item.name}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            <h3>{item.product.name}</h3> <br />
-            {item.description} <br />
-            Available at {item.market.name} <br />
-            Cost: {item.price} Shillings
+          <Typography variant="body2" color="textSecondary" component="h3">
+            {item.product.name} <br />
+            <Typography color="textPrimary" component="p">
+              {item.description} <br />
+              Available at {item.market.name} <br />
+              Cost: {item.price} Shillings
+            </Typography>
           </Typography>
         </CardContent>
       </CardActionArea>

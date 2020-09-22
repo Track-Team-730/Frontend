@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axiosWithAuth from '../../state/utils/axiosWithAuth';
 import { connect } from 'react-redux';
-import AddItem from './addItem';
-import PriceComparison from './priceComparison';
-import UserItemsListed from './userItemsLIsted';
+import AddItem from '../common/addItem';
+import PriceComparison from '../common/priceComparison';
+import UserItemsListed from '../common/userItemsLIsted';
 import getData from '../../state/actions/userActions';
 
 const UserPage = ({ getData }) => {

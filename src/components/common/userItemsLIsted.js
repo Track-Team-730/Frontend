@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axiosWithAuth from '../../state/utils/axiosWithAuth';
-import ItemCard from '../../../src/components/common/ItemCard';
+import ItemCard from './ItemCard';
 
 const initialEditItem = {
   name: '',
