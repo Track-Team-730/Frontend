@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axiosWithAuth from '../../state/utils/axiosWithAuth';
+import { connect } from 'react-redux';
 import AddItem from './addItem';
 import PriceComparison from './priceComparison';
 import UserItemsListed from './userItemsLIsted';
+import getData from '../../state/actions/userActions';
 
-const UserPage = () => {
+const UserPage = ({ getData }) => {
   const [userItemsList, setUserItemsList] = useState([]);
 
   const getUserItems = () => {
@@ -18,7 +20,9 @@ const UserPage = () => {
 
   useEffect(() => {
     getUserItems();
+    getData();
   }, []);
+
   return (
     <>
       <h1>Welcome HUMAN SO AND SO</h1>
@@ -33,4 +37,10 @@ const UserPage = () => {
   );
 };
 
-export default UserPage;
+const mapStateToProps = state => {
+  return {
+    products: state.dropdownProducts,
+    markets: state.dropdownMarkets,
+  };
+};
+export default connect(mapStateToProps, { getData })(UserPage);
