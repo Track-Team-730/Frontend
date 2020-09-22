@@ -22,6 +22,9 @@ import { SignUpPage } from './components/pages/SignUp';
 
 const store = createStore(userReducer, applyMiddleware(thunk, logger));
 
+
+
+
 ReactDOM.render(
   <Router>
     <Provider store={store}>
@@ -50,8 +53,7 @@ function App() {
       <Switch>
         <PrivateRoute path="/userpage" component={UserPage} />
         <Route path="/login" component={LoginPage} />
-        <Route path="/signup" component={SignUpPage}></Route>
-
+        <Route path ="/signup" component={SignUpPage}></Route>
         <Route path="/landing" component={LandingPage} />
         <Route path="/" exact component={() => <LandingPage />} />
         {/* <Route path="/login" component={LoginPage} />
