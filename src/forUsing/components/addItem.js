@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+// import './App.css';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
@@ -8,25 +8,9 @@ import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 import * as yup from 'yup';
 import axios from 'axios';
-
-const market = [
-  {
-    value: 'USD',
-    label: '$',
-  },
-  {
-    value: 'EUR',
-    label: '€',
-  },
-  {
-    value: 'BTC',
-    label: '฿',
-  },
-  {
-    value: 'JPY',
-    label: '¥',
-  },
-];
+import axiosWithAuth from '../../state/utils/axiosWithAuth';
+import Dropdown from '../../components/common/Dropdown';
+import { option } from 'yargs';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -69,7 +53,25 @@ const AddItem = () => {
 
   const [item, setItem] = useState(initialValues);
   const [errors, setFormErrors] = useState(initialFormErrors);
+  const [markets, setMarkets] = useState([]);
+  const [products, setProducts] = useState([]);
 
+  useEffect(() => {
+    axiosWithAuth()
+      .get('/markets')
+      .then(markets => {
+        console.log('.then', markets.data);
+        setMarkets(markets.data);
+      })
+      .catch(err => console.log('oops', err));
+    axiosWithAuth()
+      .get('/products')
+      .then(products => {
+        console.log('.then', products.data);
+        setProducts(products.data);
+      })
+      .catch(err => console.log('oops', err));
+  }, []);
   //validation
 
   const schema = yup.object().shape({
@@ -98,7 +100,7 @@ const AddItem = () => {
           [e.target.name]: '',
         });
       })
-      /* if the validation is unsuccessful, we can set the error message to the message 
+      /* if the validation is unsuccessful, we can set the error message to the message
         returned from yup (that we created in our schema) */
       .catch(err => {
         setFormErrors({
@@ -168,7 +170,7 @@ const AddItem = () => {
           <TextField
             className={classes.inputs}
             id="outlined-basic"
-            label="Price $"
+            label="Price 	KSh"
             variant="outlined"
             name="price"
             onChange={handleChange}
@@ -176,30 +178,30 @@ const AddItem = () => {
           <div className="error">{errors.price}</div>
 
           <TextField
-            id="outlined-select-currency"
+            id="select-market"
             select
             label="Select"
-            helperText="Please select your currency"
+            helperText="Select market location"
             variant="outlined"
             name="market"
           >
-            {market.map(option => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
+            {markets.map(market => (
+              <MenuItem key={market.marketId} value={market.marketId}>
+                {market.name}
               </MenuItem>
             ))}
           </TextField>
           <TextField
-            id="outlined-select-currency"
+            id="select-product"
             select
             label="Select"
-            helperText="Please select your currency"
+            helperText="Select product"
             variant="outlined"
             name="product"
           >
-            {market.map(option => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
+            {products.map(product => (
+              <MenuItem key={product.product_id} value={product.product_id}>
+                {product.product_name}
               </MenuItem>
             ))}
           </TextField>

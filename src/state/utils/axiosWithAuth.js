@@ -4,7 +4,7 @@ const axiosWithAuth = () => {
   return axios.create({
     baseURL: 'https://african-marketplace-730.herokuapp.com',
     headers: {
-      Authorization: localStorage.getItem('token'),
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
     },
   });
 };
