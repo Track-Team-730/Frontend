@@ -18,9 +18,9 @@ export default function RenderSignUp(props) {
             </label>
             <label>Email:&nbsp;
                 <input 
-                    value = {values.email}
+                    value = {values.primaryEmail}
                     onChange = {change}
-                    name = 'email'
+                    name = 'primaryEmail'
                     type = 'text'
                 />
             </label>
