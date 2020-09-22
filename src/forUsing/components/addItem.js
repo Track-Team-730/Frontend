@@ -50,32 +50,16 @@ const initialFormErrors = {
   product: '',
 };
 
-const AddItem = ({ getData, products }) => {
+const AddItem = ({ getData, products, markets }) => {
   const classes = useStyles();
 
   const [item, setItem] = useState(initialValues);
   const [errors, setFormErrors] = useState(initialFormErrors);
-  const [markets, setMarkets] = useState([]);
-  // const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    axiosWithAuth()
-      .get('/markets')
-      .then(markets => {
-        console.log('.then', markets.data);
-        setMarkets(markets.data);
-      })
-      .catch(err => console.log('oops', err));
-    // axiosWithAuth()
-    //   .get('/products')
-    //   .then(products => {
-    //     console.log('.then', products.data);
-    //     setProducts(products.data);
-    //   })
-    //   .catch(err => console.log('oops', err));
-    // getData(markets);
-    getData('products');
+    getData();
   }, [getData]);
+
   //validation
 
   const schema = yup.object().shape({
@@ -234,7 +218,7 @@ const AddItem = ({ getData, products }) => {
 const mapStateToProps = state => {
   return {
     products: state.dropdownProducts,
-    // dropdownMarkets: state.data,
+    markets: state.dropdownMarkets,
   };
 };
 export default connect(mapStateToProps, { getData })(AddItem);
