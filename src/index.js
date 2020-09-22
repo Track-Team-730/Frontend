@@ -6,17 +6,27 @@ import {
   useHistory,
   Switch,
 } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import logger from 'redux-logger';
+import UserPage from './forUsing/components/userPage';
+import PrivateRoute from './state/utils/privateRoute';
+import userReducer from './state/reducer/userReducer';
 
-import { NotFoundPage } from './components/pages/NotFound';
-import { ExampleListPage } from './components/pages/ExampleList';
-import { LoginPage } from './components/pages/Login';
-import { LandingPage } from './components/pages/Landing';
+const store = createStore(userReducer, applyMiddleware(thunk, logger));
+
+// import { ExampleListPage } from './components/pages/ExampleList';
+// import { LoginPage } from './components/pages/Login';
+// import { LandingPage } from './components/pages/Landing';
 
 ReactDOM.render(
   <Router>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <Provider store={store}>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </Provider>
   </Router>,
   document.getElementById('root')
 );
@@ -33,13 +43,16 @@ function App() {
   };
 
   return (
-    <Switch>
-      <Route path="/login" component={LoginPage} />
-      <Route path="/landing" component={LandingPage} />
-      {/* any of the routes you need secured should be registered as SecureRoutes */}
-      <Route path="/" exact component={() => <LandingPage />} />
+    <Router>
+      <Switch>
+        <PrivateRoute path="/userpage" component={UserPage} />
+        {/* <Route path="/login" component={LoginPage} />
+      <Route path="/landing" component={LandingPage} /> */}
+        {/* any of the routes you need secured should be registered as SecureRoutes */}
+        {/* <Route path="/" exact component={() => <LandingPage />} />
       <Route path="/example-list" component={ExampleListPage} />
-      <Route component={NotFoundPage} />
-    </Switch>
+      <Route component={NotFoundPage} /> */}
+      </Switch>
+    </Router>
   );
 }
