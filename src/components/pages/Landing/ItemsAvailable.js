@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axiosWithAuth from '../../../state/utils/axiosWithAuth';
 import { makeStyles } from '@material-ui/core/styles';
 import ItemCard from '../../common/ItemCard';
 import Grid from '@material-ui/core/Grid';
@@ -20,22 +21,51 @@ const useStyles = makeStyles(theme => ({
 function ItemsAvailable() {
   const classes = useStyles();
 
-  const itemList = [
+  const initialItemList = [
     {
       itemId: 1,
       name: 'Egg Sale!',
       description: 'Eggs for 200 Shillings per unit',
-      price: 400.0,
-      market: 'Zimbabwe',
-    },
-    {
-      itemId: 2,
-      name: 'Fresh fufu!',
-      description: 'Ghana style',
-      price: 800.0,
-      market: 'Nairobe',
+      price: 400,
+      user: {
+        userId: 1,
+        name: 'Jill',
+      },
+      market: {
+        marketId: 1,
+        name: 'Bujumbura, Burundi',
+      },
+      product: {
+        productId: 1,
+        name: 'Eggs',
+        wholesalePrice: 348,
+        subcategory: {
+          subcategoryId: 1,
+          name: 'Animal Products - Other',
+          category: {
+            categoryId: 1,
+            name: 'Animal Products',
+          },
+        },
+      },
     },
   ];
+  const [items, setItems] = useState(initialItemList);
+
+  const getItems = () => {
+    console.log('getItemsRan');
+    axiosWithAuth()
+      .get('/items')
+      .then(items => {
+        console.log('items', items.data);
+        setItems(items.data);
+      })
+      .catch(err => console.log(err));
+  };
+
+  useEffect(() => {
+    getItems();
+  }, []);
 
   return (
     <div>
@@ -43,7 +73,7 @@ function ItemsAvailable() {
       <Grid container className={classes.root} spacing={2}>
         <Grid item xs={12}>
           <Grid container justify="center" spacing={2}>
-            {itemList.map(item => (
+            {items.map(item => (
               <Grid key={item.itemId} item>
                 <ItemCard item={item} key={item.itemId} />
               </Grid>
