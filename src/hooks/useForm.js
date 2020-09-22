@@ -9,6 +9,7 @@ const initialFormErrors = {
 };
 
 export const useForm = initialValue => {
+  const [formErrors, setFormErrors] = useState(initialFormErrors);
   const validate = (name, value) => {
     yup
       .reach(schema, name)
@@ -27,7 +28,6 @@ export const useForm = initialValue => {
       });
   };
   const [values, setValues] = useState(initialValue);
-  const [formErrors, setFormErrors] = useState(initialFormErrors);
   const handleChanges = event => {
     const { name, value } = event.target;
     validate(name, value);
@@ -36,6 +36,7 @@ export const useForm = initialValue => {
       [name]: value,
     });
   };
+  console.log(formErrors);
   const resetForm = () => {
     setValues(initialValue);
   };

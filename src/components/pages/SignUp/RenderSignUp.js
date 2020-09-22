@@ -3,8 +3,8 @@ import TextField from '@material-ui/core/TextField';
 
 export default function RenderSignUp(props) {
 
-    const { values, change, submit, disabled, errors } = props;
-
+    const { values, change, submit, disabled, formErrors } = props;
+    //console.log(formErrors);
   return (
     <div>
         <form onSubmit = {submit}>
@@ -16,7 +16,7 @@ export default function RenderSignUp(props) {
                     type = 'text'
                 />
             </label>
-            <p>{errors.name}</p> 
+            <p>{formErrors.name}</p> 
             <label>Email:&nbsp;
                 <input 
                     value = {values.primaryEmail}
@@ -25,7 +25,7 @@ export default function RenderSignUp(props) {
                     type = 'text'
                 />
             </label>
-            <p>{errors.primaryEmail}</p>
+            <p>{formErrors.primaryEmail}</p>
             <label>Password:&nbsp;
                 <input 
                     value = {values.password}
@@ -34,7 +34,7 @@ export default function RenderSignUp(props) {
                     type = 'text'
                 />
             </label>
-            <p>{errors.password}</p>
+            <p>{formErrors.password}</p>
             <button disabled = {disabled} >Register</button>
         </form>
     </div>

@@ -26,29 +26,9 @@ const initialDisabled = true;
 const SignUpContainer = () => {
     //states
     const [users, setUsers] = useState(initialUsers);
-    const [formValues, handleChanges, resetForm, formErrors] = useForm(initialValues);
+    const [formValues, handleChanges, resetForm, setValues, formErrors] = useForm(initialValues);
     const [disabled, setDisabled] = useState(initialDisabled);
-    // const [formErrors, setFormErrors] = useState(initialFormErrors);
-
-    //Validation
-
-    // const validate = (name, value) => {
-    //   yup
-    //     .reach(schema, name)
-    //     .validate(value)
-    //     .then(valid => {
-    //       setFormErrors({
-    //         ...formErrors, 
-    //         [name]: ""
-    //       });
-    //     })
-    //     .catch(err => {
-    //       setFormErrors({
-    //         ...formErrors, 
-    //         [name]: err.errors[0]
-    //       });
-    //     });
-    // };
+    // const [formErrors, setFormErrors] = useState(initialFormErrors)
 
     //Helpers
     let history = useHistory();
@@ -58,7 +38,7 @@ const SignUpContainer = () => {
         .post('/createnewuser', newUser)
         .then(res => {
           localStorage.setItem('token', res.token);
-          history.push('/dashboard');
+          history.push('/userpage');
           resetForm();
         })
         .catch(err => {
@@ -86,13 +66,15 @@ const SignUpContainer = () => {
     resetForm(initialValues);
   };
 
+  console.log(formErrors.name);
+
   return (
     <Container maxWidth="sm">
         <RenderSignUp 
             values = {formValues}
             change = {handleChanges}
             submit = {submitValues}
-            errors = {formErrors}
+            formErrors = {formErrors}
             disabled = {disabled}
         />
     </Container>
