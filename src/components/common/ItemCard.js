@@ -33,9 +33,10 @@ function ItemCard({ item, editButtons }) {
             {item.name}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
+            <h3>{item.product.name}</h3> <br />
             {item.description} <br />
-            Available at {item.market} <br />
-            Cost {item.price} Whatsits? No really, what monetary unit??
+            Available at {item.market.name} <br />
+            Cost: {item.price} Shillings
           </Typography>
         </CardContent>
       </CardActionArea>
