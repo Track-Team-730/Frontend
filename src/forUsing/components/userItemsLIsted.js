@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axiosWithAuth from '../../state/utils/axiosWithAuth';
+import ItemCard from '../../../src/components/common/ItemCard';
 
 const initialEditItem = {
   name: '',
@@ -9,85 +10,132 @@ const initialEditItem = {
   product: '',
 };
 
-const UserItemsListed = () => {
+const UserItemsListed = ({ updateItems, userItemsList }) => {
   const [editing, setEditing] = useState(false);
   const [itemToEdit, setItemToEdit] = useState(initialEditItem);
 
-  const editItem = () => {
+  const editItem = item => {
     setEditing(true);
-    setItemToEdit();
+    setItemToEdit(item);
   };
 
   const saveEdited = e => {
     e.preventDefault();
     axiosWithAuth()
-      .put('/item/itemId', itemToEdit)
-      .then(res => {})
+      .put(`/item/${itemToEdit.id}`, itemToEdit)
+      .then(res => {
+        updateItems([
+          ...userItemsList.map(item => {
+            if (item.id === itemToEdit.id) {
+              return itemToEdit;
+            } else {
+              return item;
+            }
+          }),
+        ]);
+        setEditing(false);
+      })
+      .catch(err => {
+        console.error('Error in Edit');
+      });
+  };
+
+  const deleteItem = item => {
+    axiosWithAuth()
+      .delete(`/item/${item.id}`)
+      .then(res => {
+        updateItems(userItemsList.filter(item => item.id !== res.data));
+      })
       .catch(err => console.log(err));
   };
 
-  const deleteItem = () => {
-    axiosWithAuth()
-      .delete('/item/itemId')
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
-  };
   return (
     <>
       <h1>User Items here!</h1>
+
+      {userItemsList.map(item => {
+        return (
+          <>
+            <ItemCard
+              key={item.id}
+              item={item}
+              onClick={() => editItem(item)}
+            />
+            <span>
+              <span
+                onclick={e => {
+                  e.stopPropagation();
+                  deleteItem(item);
+                }}
+              >
+                X
+              </span>
+            </span>
+          </>
+        );
+      })}
 
       <form onSubmit={saveEdited}>
         <label>
           Name:&nbsp;
           <input
-            onChange={{}}
-            value={e => setItemToEdit({ ...itemToEdit, name: e.target.value })}
+            name="name"
+            placeholder="REQUIRED"
+            onChange={e =>
+              setItemToEdit({ ...itemToEdit, name: e.target.value })
+            }
+            value={itemToEdit.name}
           />
         </label>
         <label>
           Description:&nbsp;
           <input
-            onChange={{}}
-            value={e =>
+            onChange={e =>
               setItemToEdit({ ...itemToEdit, description: e.target.value })
             }
+            value={itemToEdit.description}
           />
         </label>
         <label>
           Price:&nbsp;
           <input
-            onChange={{}}
-            value={e => setItemToEdit({ ...itemToEdit, price: e.target.value })}
+            name="price"
+            placeholder="REQUIRED"
+            onChange={e =>
+              setItemToEdit({ ...itemToEdit, price: e.target.value })
+            }
+            value={itemToEdit.price}
           />
         </label>
         <label>
           Market:&nbsp;
           <select
-            onChange={{}}
-            value={e =>
+            name="market"
+            onChange={e =>
               setItemToEdit({ ...itemToEdit, market: e.target.value })
             }
+            value={itemToEdit.market}
           >
-            <option value="">- select an option -</option>
+            <option value="">- REQUIRED -</option>
           </select>
         </label>
         <label>
           Product:&nbsp;
           <select
-            onChange={{}}
-            value={e =>
+            name="product"
+            onChange={e =>
               setItemToEdit({ ...itemToEdit, product: e.target.value })
             }
+            value={itemToEdit.product}
           >
-            <option value="">- select an option -</option>
+            <option value="">- REQUIRED -</option>
           </select>
         </label>
       </form>
 
-      <button>Edit Item</button>
-      <button>Save Item</button>
-      <button>Delete Item</button>
-      <button>Cancel</button>
+      <button type="submit">Save Item</button>
+
+      <button onClick={() => setEditing(false)}>Cancel</button>
     </>
   );
 };
