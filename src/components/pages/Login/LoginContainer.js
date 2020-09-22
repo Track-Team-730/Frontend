@@ -35,7 +35,7 @@ const LoginContainer = () => {
 
   const [formData, setFormData] = useState(initialValues);
   const [errors, setFormErrors] = useState(initialFormErrors);
-  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(true);
 
   //validation
 
@@ -120,6 +120,7 @@ const LoginContainer = () => {
             label="Email"
             type="email"
             variant="filled"
+            name="email"
             onChange={handleChange}
           />
           <div className="error">{errors.email}</div>
@@ -130,11 +131,17 @@ const LoginContainer = () => {
             type="password"
             autoComplete="current-password"
             variant="filled"
+            name="password"
             onChange={handleChange}
           />
           <div className="error">{errors.password}</div>
 
-          <Button variant="contained" color="primary">
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            disabled={buttonDisabled}
+          >
             Log In
           </Button>
         </Grid>
