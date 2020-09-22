@@ -1,10 +1,13 @@
 import React from 'react';
 import RenderLandingPage from './RenderLandingPage';
+import Container from '@material-ui/core/Container';
 
 function LandingContainer({ LoadingComponent }) {
   return (
     <>
-      <RenderLandingPage />
+      <Container maxWidth="md">
+        <RenderLandingPage />
+      </Container>
     </>
   );
 }
