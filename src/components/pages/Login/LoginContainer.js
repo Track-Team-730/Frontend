@@ -5,8 +5,8 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import * as yup from 'yup';
-import axios from 'axios';
 import './style.css';
+import axiosWithAuth from '../../../state/utils/axiosWithAuth';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,12 +21,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const initialValues = {
-  email: '',
+  primaryEmail: '',
   password: '',
 };
 
 const initialFormErrors = {
-  email: '',
+  primaryEmail: '',
   password: '',
 };
 
@@ -40,7 +40,7 @@ const LoginContainer = () => {
   //validation
 
   const schema = yup.object().shape({
-    email: yup
+    primaryEmail: yup
       .string()
       .email()
       .required('Email is required'),
@@ -85,16 +85,15 @@ const LoginContainer = () => {
   };
 
   const submit = () => {
-    axios
-      .post('https://reqres.in/api/users', formData)
+    axiosWithAuth()
+      .post('/login', formData)
       .then(res => {
-        console.log('this is your data', res.data);
-
-        //reset form
-
-        setFormData(initialValues);
+        console.log('onSubmit res:', res);
+        window.localStorage.setItem('token', res.data.payload);
+        window.location = '/userpage';
       })
-      .catch(err => console.log(err.response));
+      .catch(err => console.log(err.response))
+      .finally(setFormData(initialValues));
   };
 
   // handleChange function
@@ -120,10 +119,10 @@ const LoginContainer = () => {
             label="Email"
             type="email"
             variant="filled"
-            name="email"
+            name="primaryEmail"
             onChange={handleChange}
           />
-          <div className="error">{errors.email}</div>
+          <div className="error">{errors.primaryEmail}</div>
           <TextField
             className={classes.inputs}
             id="filled-password-input"
