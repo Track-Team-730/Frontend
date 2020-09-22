@@ -2,19 +2,34 @@ import { ACTION_GET, ACTION_GET_SUCCESS, ACTION_GET_ERROR } from '../actions';
 
 const initialState = {
   data: [],
-  loadingUser: false,
+  dropdownProducts: [],
+  // loadingUser: false,
+  isFetching: false,
   error: '',
-  message: '',
+  // message: '',
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case ACTION_GET:
-      return {};
+      return {
+        ...state,
+        isFetching: true,
+        error: '',
+      };
     case ACTION_GET_SUCCESS:
-      return {};
+      return {
+        ...state,
+        dropdownProducts: action.payload,
+        isFetching: false,
+        error: '',
+      };
     case ACTION_GET_ERROR:
-      return {};
+      return {
+        ...state,
+        isFetching: false,
+        error: action.payload,
+      };
     default:
       return state;
   }

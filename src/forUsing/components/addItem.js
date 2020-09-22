@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 // import './App.css';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
@@ -9,7 +10,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import * as yup from 'yup';
 import axios from 'axios';
 import axiosWithAuth from '../../state/utils/axiosWithAuth';
-import Dropdown from '../../components/common/Dropdown';
+import getData from '../../state/actions/userActions';
+
 import { option } from 'yargs';
 
 const useStyles = makeStyles(theme => ({
@@ -48,13 +50,13 @@ const initialFormErrors = {
   product: '',
 };
 
-const AddItem = () => {
+const AddItem = ({ getData, products }) => {
   const classes = useStyles();
 
   const [item, setItem] = useState(initialValues);
   const [errors, setFormErrors] = useState(initialFormErrors);
   const [markets, setMarkets] = useState([]);
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
 
   useEffect(() => {
     axiosWithAuth()
@@ -64,14 +66,16 @@ const AddItem = () => {
         setMarkets(markets.data);
       })
       .catch(err => console.log('oops', err));
-    axiosWithAuth()
-      .get('/products')
-      .then(products => {
-        console.log('.then', products.data);
-        setProducts(products.data);
-      })
-      .catch(err => console.log('oops', err));
-  }, []);
+    // axiosWithAuth()
+    //   .get('/products')
+    //   .then(products => {
+    //     console.log('.then', products.data);
+    //     setProducts(products.data);
+    //   })
+    //   .catch(err => console.log('oops', err));
+    // getData(markets);
+    getData('products');
+  }, [getData]);
   //validation
 
   const schema = yup.object().shape({
@@ -227,4 +231,10 @@ const AddItem = () => {
   );
 };
 
-export default AddItem;
+const mapStateToProps = state => {
+  return {
+    products: state.dropdownProducts,
+    // dropdownMarkets: state.data,
+  };
+};
+export default connect(mapStateToProps, { getData })(AddItem);
