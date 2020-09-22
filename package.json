@@ -16,14 +16,10 @@
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
-<<<<<<< HEAD
-    "react-scripts": "^3.4.3"
-=======
     "react-scripts": "3.4.1",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0"
->>>>>>> a19d3ac53a996d6353fe42573a0f039694941f90
   },
   "scripts": {
     "start": "craco start",
@@ -78,7 +74,7 @@
     "@testing-library/user-event": "^7.2.1",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-react-hooks": "^4.0.4",
-    "husky": "^4.2.5",
+    "husky": "^4.3.0",
     "jest-canvas-mock": "^2.2.0",
     "jest-environment-jsdom-sixteen": "^1.0.3",
     "jest-prop-type-error": "^1.1.0",
