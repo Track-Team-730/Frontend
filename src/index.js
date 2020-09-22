@@ -45,11 +45,13 @@ function App() {
   };
 
   return (
+
     <Router>
       <Switch>
         <PrivateRoute path="/userpage" component={UserPage} />
         <Route path="/login" component={LoginPage} />
         <Route path="/signup" component={SignUpPage}></Route>
+
         <Route path="/landing" component={LandingPage} />
         <Route path="/" exact component={() => <LandingPage />} />
         {/* <Route path="/login" component={LoginPage} />
