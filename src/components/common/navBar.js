@@ -4,14 +4,12 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
-import { MemoryRouter as Router } from 'react-router';
+// import { MemoryRouter as Router } from 'react-router';
 import { Link as RouterLink } from 'react-router-dom';
 //import Button from '@material-ui/core/Button';
-
 // const LinkToLogin = React.forwarRef((props, red) => (
 //     <RouterLink ref={ref} to='/login' {...props} />
 // ));
-
 const useStyles = makeStyles({
     appBar: {
         margin: '0 0 1rem',
@@ -36,20 +34,19 @@ const useStyles = makeStyles({
     //    justifyContent: 'space-between',
     },
     // links: {
-    //     border: '1px solid grey',
+         //border: '1px solid grey',
     //     width: '100%',
     // },
     link: {
         //border: '1px solid grey',
         width: '100%',
-        padding: '0 2rem',
+        padding: '0 1rem',
         fontSize: '1rem',
         //display: 'flex',
         // flexFlow: 'row wrap',
         //justifyContent: 'space-between',
     }
   });
-
 export default function NavBar(){
     //const preventDefault = (event) => event.preventDefault();
     const classes = useStyles();
@@ -63,11 +60,14 @@ export default function NavBar(){
                         </Typography>
                     </div>
                     <div className = {classes.nav}>
-                        <Router>
+                        {/* <Router> */}
                             <Typography variant="body2" component="h3">
                                 {/* <div className = {classes.links}> */}
-                                    <Link component={RouterLink} color = 'inherit' to='/' className = {classes.link}>
+                                    <Link component={RouterLink} color = 'inherit' to = '/' className = {classes.link}>
                                             Home
+                                    </Link>
+                                    <Link component={RouterLink} color = 'inherit' to='/landing' className = {classes.link}>
+                                            Items
                                     </Link>
                                 {/* </div> */}
                                 {/* <div className = {classes.links}> */}
@@ -82,7 +82,7 @@ export default function NavBar(){
                                     </Link>
                                 {/* </div> */}
                             </Typography>  
-                        </Router>
+                        {/* </Router> */}
                     </div>
                 </div>
                 {/* <Typography variant="body2" component="h3">
