@@ -19,9 +19,12 @@ const UserPage = ({ getData }) => {
   };
 
   useEffect(() => {
-    getUserItems();
     getData();
   }, [getData]);
+
+  useEffect(() => {
+    getUserItems();
+  }, []);
 
   return (
     <>

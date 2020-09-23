@@ -32,8 +32,12 @@ const initialEditItem = {
   name: '',
   description: '',
   price: '',
-  market: '',
-  product: '',
+  market: {
+    marketId: undefined,
+  },
+  product: {
+    productId: undefined,
+  },
 };
 
 const UserItemsListed = ({ updateItems, userItemsList, products, markets }) => {
@@ -47,11 +51,37 @@ const UserItemsListed = ({ updateItems, userItemsList, products, markets }) => {
   }
 
   const saveEdited = e => {
-    console.log('this is save edit', saveEdited);
     e.preventDefault();
+    const newItem = {
+      name: itemToEdit.itemName,
+      description: itemToEdit.description,
+      price: parseFloat(itemToEdit.price),
+      market: { marketId: itemToEdit.marketId },
+      product: { productId: itemToEdit.productId },
+    };
+    console.log('this is itemToEdit', itemToEdit);
+    console.log(itemToEdit.itemId);
     axiosWithAuth()
-      .patch(`/item/${itemToEdit.id}`, itemToEdit)
-      .then(res => {
+      .patch('/item/1', newItem)
+      // console.log("this means axioswithAUth is being hit")
+      .then(
+        res => console.log('this should go', res)
+        // console.log('patch success', res.headers);
+        // updateItems([
+        //   ...userItemsList.map(item => {
+        //     if (item.id === itemToEdit.id) {
+        //       return itemToEdit;
+        //     } else {
+        //       return item;
+        //     }
+        //   }),
+        // ]);
+        // console.log("this should be update", itemToEdit);
+      )
+      .catch(err => {
+        console.error('Error in Edit');
+      })
+      .finally(
         updateItems([
           ...userItemsList.map(item => {
             if (item.id === itemToEdit.id) {
@@ -60,11 +90,8 @@ const UserItemsListed = ({ updateItems, userItemsList, products, markets }) => {
               return item;
             }
           }),
-        ]);
-      })
-      .catch(err => {
-        console.error('Error in Edit');
-      });
+        ])
+      );
   };
 
   const deleteItem = item => {
@@ -151,8 +178,14 @@ const UserItemsListed = ({ updateItems, userItemsList, products, markets }) => {
               label="Select"
               helperText="Select market location"
               variant="outlined"
-              name="market"
-              value={itemToEdit.market}
+              name="marketId"
+              value={itemToEdit.marketId}
+              onChange={e =>
+                setItemToEdit({
+                  ...itemToEdit,
+                  market: { marketId: e.target.value },
+                })
+              }
             >
               {markets.map(market => (
                 <MenuItem key={market.marketId} value={market.marketId}>
@@ -166,12 +199,18 @@ const UserItemsListed = ({ updateItems, userItemsList, products, markets }) => {
               label="Select"
               helperText="Select product"
               variant="outlined"
-              name="product"
-              value={itemToEdit.product}
+              name="productId"
+              value={itemToEdit.productId}
+              onChange={e =>
+                setItemToEdit({
+                  ...itemToEdit,
+                  product: { productId: e.target.value },
+                })
+              }
             >
-              {products.map(product => (
-                <MenuItem key={product.product_id} value={product.product_id}>
-                  {product.product_name}
+              {products.map(prod => (
+                <MenuItem key={prod.product_id} value={prod.product_id}>
+                  {prod.product_name}
                 </MenuItem>
               ))}
             </TextField>
