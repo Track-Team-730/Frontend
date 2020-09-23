@@ -16,7 +16,7 @@ const getData = () => {
     axiosWithAuth()
       .get('/products')
       .then(response => {
-        console.log('getData Products success', response.data);
+        // console.log('getData Products success', response.data);
         dispatch({
           type: `ACTION_GET_DROP_PRODUCTS_SUCCESS`,
           payload: response.data,
@@ -31,7 +31,7 @@ const getData = () => {
     axiosWithAuth()
       .get('/markets')
       .then(response => {
-        console.log('getData Markets success', response.data);
+        // console.log('getData Markets success', response.data);
         dispatch({
           type: `ACTION_GET_DROP_MARKETS_SUCCESS`,
           payload: response.data,
