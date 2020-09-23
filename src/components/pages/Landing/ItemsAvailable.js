@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axiosWithAuth from '../../../state/utils/axiosWithAuth';
+import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import ItemCard from '../../common/ItemCard';
 import Grid from '@material-ui/core/Grid';
@@ -54,8 +55,10 @@ function ItemsAvailable() {
 
   const getItems = () => {
     console.log('getItemsRan');
-    axiosWithAuth()
-      .get('/items')
+    // axiosWithAuth()
+    //  .get('/items')
+    axios
+      .get('https://african-marketplace-730.herokuapp.com/items')
       .then(items => {
         console.log('items', items.data);
         setItems(items.data);
