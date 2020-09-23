@@ -7,11 +7,14 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
 import * as yup from 'yup';
 import axios from 'axios';
 import axiosWithAuth from '../../state/utils/axiosWithAuth';
+// import NumberFormat from 'react-number-format';
 
-import { option } from 'yargs';
+import { number, option } from 'yargs';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -36,9 +39,9 @@ const useStyles = makeStyles(theme => ({
 const initialValues = {
   itemName: '',
   description: '',
-  price: 0,
-  market: '',
-  product: '',
+  price: undefined,
+  marketId: undefined,
+  productId: undefined,
 };
 
 const initialFormErrors = {
@@ -67,8 +70,10 @@ const AddItem = ({ products, markets }) => {
       .number()
       .required('Price is Required')
       .positive()
-      .integer()
+      // .integer()
       .min(1),
+    marketId: yup.number().required('Please Choose a Market'),
+    productId: yup.number().required('Please Choose a Product'),
   });
 
   const inputChange = e => {
@@ -100,14 +105,25 @@ const AddItem = ({ products, markets }) => {
   };
 
   const submit = () => {
+    // console.log("Item before restructure",item);
+    const newItem = {
+      name: item.itemName,
+      description: item.description,
+      price: parseFloat(item.price),
+      market: { marketId: item.marketId },
+      product: { productId: item.productId },
+    };
+    console.log('newItem about to post', newItem);
     // schema.validate(formData).then(() => {
-    axios
-      .post('https://reqres.in/api/users', item)
+    // axios
+    //   .post('https://reqres.in/api/users', item)
+    axiosWithAuth()
+      .post('/item', newItem)
       .then(res => {
-        console.log('this is your posted data', res.data);
+        console.log('AddItem post success', res.data);
         setItem(initialValues);
       })
-      .catch(err => console.log(err.response));
+      .catch(err => console.log('AddItem post failed', err.response));
     // });
   };
 
@@ -134,6 +150,7 @@ const AddItem = ({ products, markets }) => {
             label="Item Name"
             variant="outlined"
             name="itemName"
+            value={item.itemName}
             onChange={handleChange}
           />
           <div className="error">{errors.itemName}</div>
@@ -146,6 +163,7 @@ const AddItem = ({ products, markets }) => {
             multiline
             variant="outlined"
             name="description"
+            value={item.description}
             onChange={handleChange}
           />
           <div className="error">{errors.description}</div>
@@ -155,7 +173,9 @@ const AddItem = ({ products, markets }) => {
             id="outlined-basic"
             label="Price 	KSh"
             variant="outlined"
+            type="number"
             name="price"
+            value={item.price}
             onChange={handleChange}
           />
           <div className="error">{errors.price}</div>
@@ -166,7 +186,9 @@ const AddItem = ({ products, markets }) => {
             label="Select"
             helperText="Select market location"
             variant="outlined"
-            name="market"
+            name="marketId"
+            value={item.marketId}
+            onChange={handleChange}
           >
             {markets.map(market => (
               <MenuItem key={market.marketId} value={market.marketId}>
@@ -174,13 +196,16 @@ const AddItem = ({ products, markets }) => {
               </MenuItem>
             ))}
           </TextField>
+
           <TextField
             id="select-product"
             select
             label="Select"
             helperText="Select product"
             variant="outlined"
-            name="product"
+            name="productId"
+            value={item.productId}
+            onChange={handleChange}
           >
             {products.map(product => (
               <MenuItem key={product.product_id} value={product.product_id}>
@@ -201,6 +226,7 @@ const AddItem = ({ products, markets }) => {
             variant="contained"
             color="secondary"
             className={classes.button}
+            onClick={() => setItem(initialValues)}
           >
             Cancel
           </Button>
