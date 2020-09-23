@@ -4,6 +4,7 @@ import Container from '@material-ui/core/Container';
 import RenderSignUp from './RenderSignUp';
 import schema from './formSchema';
 import axiosWithAuth from '../../../state/utils/axiosWithAuth';
+import axios from 'axios';
 import * as yup from 'yup';
 import { useForm } from '../../../hooks/useForm';
 
@@ -34,9 +35,10 @@ const SignUpContainer = () => {
     let history = useHistory();
 
     const postNewUser = newUser => {
-      axiosWithAuth()
-        .post('/createnewuser', newUser)
+      axios
+        .post('https://african-marketplace-730.herokuapp.com/createnewuser', newUser)
         .then(res => {
+          //console.log('Results from axios sign-up: ',res);
           localStorage.setItem('token', res.token);
           history.push('/userpage');
           resetForm();
@@ -66,7 +68,7 @@ const SignUpContainer = () => {
     resetForm(initialValues);
   };
 
-  console.log(formErrors.name);
+  //console.log(formErrors.name);
 
   return (
     <Container maxWidth="sm">

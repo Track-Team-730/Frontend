@@ -36,7 +36,7 @@ export const useForm = initialValue => {
       [name]: value,
     });
   };
-  console.log(formErrors);
+  //console.log(formErrors);
   const resetForm = () => {
     setValues(initialValue);
   };
