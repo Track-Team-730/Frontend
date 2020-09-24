@@ -8,6 +8,7 @@ import getData from '../../state/actions/userActions';
 
 const UserPage = ({ getData }) => {
   const [userItemsList, setUserItemsList] = useState([]);
+  const [productToCompare, setProductToCompare] = useState('');
 
   const getUserItems = () => {
     axiosWithAuth()
@@ -30,12 +31,13 @@ const UserPage = ({ getData }) => {
     <>
       <h1>Welcome HUMAN SO AND SO</h1>
       <h2>User Page</h2>
-      <AddItem />
-      <PriceComparison />
+      <AddItem setProductToCompare={setProductToCompare} />
       <UserItemsListed
         updateItems={setUserItemsList}
         userItemsList={userItemsList}
+        setProductToCompare={setProductToCompare}
       />
+      <PriceComparison setProductToCompare={productToCompare} />
     </>
   );
 };

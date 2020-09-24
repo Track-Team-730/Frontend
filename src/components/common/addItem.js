@@ -226,16 +226,6 @@ const AddItem = ({ products, markets }) => {
           </Button>
 
           <Button
-            // type="submit"
-            variant="contained"
-            color="primary"
-            className={classes.button}
-            // onClick={}
-          >
-            Compare Prices
-          </Button>
-
-          <Button
             variant="contained"
             color="secondary"
             className={classes.button}

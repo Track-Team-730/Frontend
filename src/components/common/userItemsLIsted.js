@@ -32,17 +32,22 @@ const initialEditItem = {
   name: '',
   description: '',
   price: '',
-  // marketId: undefined,
-  // productId: undefined
   market: {
     marketId: '',
   },
   product: {
     productId: '',
+    name: '',
   },
 };
 
-const UserItemsListed = ({ updateItems, userItemsList, products, markets }) => {
+const UserItemsListed = ({
+  updateItems,
+  userItemsList,
+  products,
+  markets,
+  setProductToCompare,
+}) => {
   const classes = useStyles();
 
   const [itemToEdit, setItemToEdit] = useState(initialEditItem);
@@ -195,7 +200,9 @@ const UserItemsListed = ({ updateItems, userItemsList, products, markets }) => {
               onChange={e =>
                 setItemToEdit({
                   ...itemToEdit,
-                  product: { productId: e.target.value },
+                  product: {
+                    productId: e.target.value,
+                  },
                 })
               }
             >
