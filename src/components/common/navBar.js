@@ -13,18 +13,21 @@ import { Link as RouterLink } from 'react-router-dom';
 const useStyles = makeStyles({
     appBar: {
         margin: '0 0 1rem',
+        backgroundColor: '#C36',
+        fontFamily: 'monospace',
     },
     toolBar: {
-        //border: '1px solid grey',
+        border: '1px solid grey',
         width: '100%',
         display: 'flex',
         justifyContent: 'space-between',
     },
     company: {
+        border: '1px solid grey',
         padding: '.5rem 1rem',
     },
     nav: {
-       //border: '3px solid grey',
+       border: '3px solid grey',
        display: 'flex',
        alignItems: 'center', 
        justifyContent: 'center',
@@ -33,12 +36,8 @@ const useStyles = makeStyles({
        width: '50%', 
     //    justifyContent: 'space-between',
     },
-    // links: {
-         //border: '1px solid grey',
-    //     width: '100%',
-    // },
     link: {
-        //border: '1px solid grey',
+        border: '1px solid grey',
         width: '100%',
         padding: '0 1rem',
         fontSize: '1rem',
@@ -81,6 +80,9 @@ export default function NavBar(){
                                         Sign Up
                                     </Link>
                                 {/* </div> */}
+                                    <Link component={RouterLink} color = 'inherit' to='/userpage' className = {classes.link}>
+                                        Profile
+                                    </Link>
                             </Typography>  
                         {/* </Router> */}
                     </div>
