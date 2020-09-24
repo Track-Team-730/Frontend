@@ -32,11 +32,13 @@ const initialEditItem = {
   name: '',
   description: '',
   price: '',
+  // marketId: undefined,
+  // productId: undefined
   market: {
-    marketId: undefined,
+    marketId: '',
   },
   product: {
-    productId: undefined,
+    productId: '',
   },
 };
 
@@ -46,42 +48,25 @@ const UserItemsListed = ({ updateItems, userItemsList, products, markets }) => {
   const [itemToEdit, setItemToEdit] = useState(initialEditItem);
 
   function editItem(item) {
-    console.log('this is the editing item', item);
+    // console.log('this is the editing item', item);
     setItemToEdit(item);
   }
 
   const saveEdited = e => {
     e.preventDefault();
     const newItem = {
-      name: itemToEdit.itemName,
+      name: itemToEdit.name,
       description: itemToEdit.description,
       price: parseFloat(itemToEdit.price),
-      market: { marketId: itemToEdit.marketId },
-      product: { productId: itemToEdit.productId },
+      market: { marketId: itemToEdit.market.marketId },
+      product: { productId: itemToEdit.product.productId },
     };
-    console.log('this is itemToEdit', itemToEdit);
-    console.log(itemToEdit.itemId);
+    // console.log('this is itemToEdit', itemToEdit);
+
     axiosWithAuth()
-      .patch('/item/1', newItem)
-      // console.log("this means axioswithAUth is being hit")
-      .then(
-        res => console.log('this should go', res)
+      .patch(`/item/${itemToEdit.itemId}`, newItem)
+      .then(res => {
         // console.log('patch success', res.headers);
-        // updateItems([
-        //   ...userItemsList.map(item => {
-        //     if (item.id === itemToEdit.id) {
-        //       return itemToEdit;
-        //     } else {
-        //       return item;
-        //     }
-        //   }),
-        // ]);
-        // console.log("this should be update", itemToEdit);
-      )
-      .catch(err => {
-        console.error('Error in Edit');
-      })
-      .finally(
         updateItems([
           ...userItemsList.map(item => {
             if (item.id === itemToEdit.id) {
@@ -90,8 +75,12 @@ const UserItemsListed = ({ updateItems, userItemsList, products, markets }) => {
               return item;
             }
           }),
-        ])
-      );
+        ]);
+        // console.log("this should be update", itemToEdit);
+      })
+      .catch(err => {
+        console.error('Error in Edit');
+      });
   };
 
   const deleteItem = item => {
@@ -108,10 +97,10 @@ const UserItemsListed = ({ updateItems, userItemsList, products, markets }) => {
       <h1>Here's the items you currently have for sale!</h1>
       <ul>
         {userItemsList.map(item => (
-          <li key={item.id} onClick={() => editItem(item)}>
+          <li key={item.itemId} onClick={() => editItem(item)}>
             <span>
               <span
-                onclick={e => {
+                onClick={e => {
                   e.stopPropagation();
                   deleteItem(item);
                 }}
@@ -138,7 +127,7 @@ const UserItemsListed = ({ updateItems, userItemsList, products, markets }) => {
               id="outlined-basic"
               label="Item Name"
               variant="outlined"
-              name="itemName"
+              name="name"
               placeholder="REQUIRED"
               value={itemToEdit.name}
               onChange={e =>
@@ -179,7 +168,7 @@ const UserItemsListed = ({ updateItems, userItemsList, products, markets }) => {
               helperText="Select market location"
               variant="outlined"
               name="marketId"
-              value={itemToEdit.marketId}
+              value={itemToEdit.market.marketId}
               onChange={e =>
                 setItemToEdit({
                   ...itemToEdit,
@@ -187,12 +176,14 @@ const UserItemsListed = ({ updateItems, userItemsList, products, markets }) => {
                 })
               }
             >
+              <MenuItem value="">Pick A Market</MenuItem>
               {markets.map(market => (
                 <MenuItem key={market.marketId} value={market.marketId}>
                   {market.name}
                 </MenuItem>
               ))}
             </TextField>
+
             <TextField
               id="select-product"
               select
@@ -200,7 +191,7 @@ const UserItemsListed = ({ updateItems, userItemsList, products, markets }) => {
               helperText="Select product"
               variant="outlined"
               name="productId"
-              value={itemToEdit.productId}
+              value={itemToEdit.product.productId}
               onChange={e =>
                 setItemToEdit({
                   ...itemToEdit,
@@ -208,6 +199,7 @@ const UserItemsListed = ({ updateItems, userItemsList, products, markets }) => {
                 })
               }
             >
+              <MenuItem value="">Pick a product</MenuItem>
               {products.map(prod => (
                 <MenuItem key={prod.product_id} value={prod.product_id}>
                   {prod.product_name}
