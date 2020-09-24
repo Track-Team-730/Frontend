@@ -7,11 +7,15 @@ import Link from '@material-ui/core/Link';
 import { Link as RouterLink } from 'react-router-dom';
 import '../common/navBar.css';
 
+
 const font = "'Crimson Text', serif;";
 
 const useStyles = makeStyles({
     appBar: {
         margin: '0 0 1rem',
+        // backgroundColor: '#C36',
+        // fontFamily: font,
+
         backgroundColor: '#C36',
     },
     toolBar: {
@@ -29,7 +33,10 @@ const useStyles = makeStyles({
         fontFamily: font,
     },
     nav: {
+
+       //border: '3px solid grey',
        //border: '3px solid blue',
+
        display: 'flex',
        alignItems: 'center', 
        justifyContent: 'center',
@@ -52,8 +59,11 @@ export default function NavBar(){
         <AppBar position = 'static' className= {classes.appBar}>
             <Toolbar>
                 <div className = {classes.toolBar}>
+                    <div className = {classes.company}>
+                        <Typography variant="h5" component="h2" className = 'companyName'>
                     <div className = {classes.companyHolder}>
                         <Typography variant="h5" component="h2" className = {classes.company}>
+
                             African Marketplace
                         </Typography>
                     </div>
