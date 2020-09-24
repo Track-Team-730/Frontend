@@ -5,6 +5,7 @@ import AddItem from '../common/addItem';
 import PriceComparison from '../common/priceComparison';
 import UserItemsListed from '../common/userItemsLIsted';
 import getData from '../../state/actions/userActions';
+import Container from '@material-ui/core/Container';
 
 const UserPage = ({ getData }) => {
   const [userItemsList, setUserItemsList] = useState([]);
@@ -28,9 +29,9 @@ const UserPage = ({ getData }) => {
   }, [userItemsList]);
 
   return (
-    <>
-      <h1>Welcome HUMAN SO AND SO</h1>
-      <h2>User Page</h2>
+    <Container maxWidth="md">
+      <h1>Welcome HUMAN SO AND SO to your personal page</h1>
+      {/* <h2>Your Items</h2> */}
       <AddItem setProductToCompare={setProductToCompare} />
       <UserItemsListed
         updateItems={setUserItemsList}
@@ -38,7 +39,7 @@ const UserPage = ({ getData }) => {
         setProductToCompare={setProductToCompare}
       />
       <PriceComparison setProductToCompare={productToCompare} />
-    </>
+    </Container>
   );
 };
 
