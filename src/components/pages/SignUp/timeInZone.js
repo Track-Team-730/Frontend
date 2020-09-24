@@ -47,7 +47,7 @@ export default function Time () {
     return (
         <div className = {classes.timeBlock}>
             <h4>Date and Time in Kenya</h4>
-            <p>{timeCountry}</p>
+            <p>{timeCountry? timeCountry : null}</p>
         </div>
     );
 }
