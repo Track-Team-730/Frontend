@@ -224,6 +224,17 @@ const AddItem = ({ products, markets }) => {
           >
             Add Item
           </Button>
+
+          <Button
+            // type="submit"
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            // onClick={}
+          >
+            Compare Prices
+          </Button>
+
           <Button
             variant="contained"
             color="secondary"

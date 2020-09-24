@@ -3,16 +3,18 @@ import {
   ACTION_GET_DROP_PRODUCTS_SUCCESS,
   ACTION_GET_DROP_MARKETS_SUCCESS,
   ACTION_GET_ERROR,
+  ACTION_GET_PRICE_COMPS_SUCCESS,
+  ACTION_GET_PRICE_COMPS_ERROR,
 } from '../actions';
 
 const initialState = {
   data: [],
   dropdownProducts: [],
   dropdownMarkets: [],
-  // loadingUser: false,
+  priceComps: [],
+  priceCompsError: '',
   isFetching: false,
   error: '',
-  // message: '',
 };
 
 const userReducer = (state = initialState, action) => {
@@ -42,6 +44,19 @@ const userReducer = (state = initialState, action) => {
         ...state,
         isFetching: false,
         error: action.payload,
+      };
+    case ACTION_GET_PRICE_COMPS_SUCCESS:
+      return {
+        ...state,
+        priceComps: action.payload,
+        isFetchingPriceComps: false,
+        priceCompsError: '',
+      };
+    case ACTION_GET_PRICE_COMPS_ERROR:
+      return {
+        ...state,
+        isFetchingPriceComps: false,
+        priceCompsError: action.payload,
       };
     default:
       return state;

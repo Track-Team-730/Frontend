@@ -1,19 +1,17 @@
 import React, { useEffect } from 'react';
+import { getPriceComps } from '../../state/actions/userActions';
 import axiosForSauti from '../../state/utils/axiosForSauti';
+import { connect } from 'react-redux';
 
-const PriceComparison = () => {
+const PriceComparison = ({ getPriceComps }) => {
   useEffect(() => {
-    axiosForSauti()
-      .get('product/latestprice?product=apples')
-      .then(response => {
-        // console.log("it's working!!", response);
-      })
-      .catch(err => {
-        console.log('it dies tragically,', err);
-      });
+    console.log('getPriceComps ran in PriceComparison.js');
+    getPriceComps('beans');
   }, []);
 
   return <h1>Price Comparsions!</h1>;
 };
 
-export default PriceComparison;
+const mapStateToProps = state => {};
+
+export default connect(mapStateToProps, { getPriceComps })(PriceComparison);
