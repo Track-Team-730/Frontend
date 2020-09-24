@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import RenderSignUp from './RenderSignUp';
+import Time from './timeInZone';
 import schema from './formSchema';
-import axiosWithAuth from '../../../state/utils/axiosWithAuth';
+//import axiosWithAuth from '../../../state/utils/axiosWithAuth';
 import axios from 'axios';
-import * as yup from 'yup';
+//import * as yup from 'yup';
 import { useForm } from '../../../hooks/useForm';
 
 const initialValues = {
@@ -76,15 +77,18 @@ const SignUpContainer = () => {
   //console.log(formErrors.name);
 
   return (
-    <Container maxWidth="sm">
-      <RenderSignUp
-        values={formValues}
-        change={handleChanges}
-        submit={submitValues}
-        formErrors={formErrors}
-        disabled={disabled}
-      />
-    </Container>
+    <div>
+      <Container maxWidth="sm">
+        <RenderSignUp
+          values={formValues}
+          change={handleChanges}
+          submit={submitValues}
+          formErrors={formErrors}
+          disabled={disabled}
+        />
+        <Time />
+      </Container>
+    </div>
   );
 };
 
