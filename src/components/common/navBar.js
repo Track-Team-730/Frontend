@@ -50,6 +50,10 @@ const useStyles = makeStyles({
     fontSize: '1rem',
     textAlign: 'center',
   },
+  // link:hover{
+  //   background-color: #F4C35F;
+  //   border-radius: 10px;
+  // }
 });
 export default function NavBar() {
   const classes = useStyles();
@@ -59,18 +63,17 @@ export default function NavBar() {
         <div className={classes.toolBar}>
           <div className={classes.companyHolder}>
             <Typography variant="h5" component="h2" className={classes.company}>
-              African Marketplace
-            </Typography>
-          </div>
-          <Typography variant="body2" component="h3" className={classes.nav}>
-            <Link
+              <Link
               component={RouterLink}
               color="inherit"
               to="/home"
-              className={classes.link}
+              style = {{textDecoration: "none"}}
             >
-              Home
+              African Marketplace
             </Link>
+            </Typography>
+          </div>
+          <Typography variant="body2" component="h3" className={classes.nav}>
             <Link
               component={RouterLink}
               color="inherit"
@@ -101,7 +104,7 @@ export default function NavBar() {
               to="/userpage"
               className={classes.link}
             >
-              Profile
+              My-Items
             </Link>
           </Typography>
         </div>
