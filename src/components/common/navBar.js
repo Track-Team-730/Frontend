@@ -7,27 +7,32 @@ import Link from '@material-ui/core/Link';
 // import { MemoryRouter as Router } from 'react-router';
 import { Link as RouterLink } from 'react-router-dom';
 //import Button from '@material-ui/core/Button';
+//import '../common/navBar.css';
+
 // const LinkToLogin = React.forwarRef((props, red) => (
 //     <RouterLink ref={ref} to='/login' {...props} />
 // ));
+
+const font = "'Crimson Text', serif;";
+
 const useStyles = makeStyles({
     appBar: {
         margin: '0 0 1rem',
-        backgroundColor: '#C36',
-        fontFamily: 'monospace',
+        // backgroundColor: '#C36',
+        // fontFamily: font,
     },
     toolBar: {
-        border: '1px solid grey',
+        //border: '1px solid grey',
         width: '100%',
         display: 'flex',
         justifyContent: 'space-between',
     },
     company: {
-        border: '1px solid grey',
+        //border: '1px solid grey',
         padding: '.5rem 1rem',
     },
     nav: {
-       border: '3px solid grey',
+       //border: '3px solid grey',
        display: 'flex',
        alignItems: 'center', 
        justifyContent: 'center',
@@ -37,7 +42,7 @@ const useStyles = makeStyles({
     //    justifyContent: 'space-between',
     },
     link: {
-        border: '1px solid grey',
+        //border: '1px solid grey',
         width: '100%',
         padding: '0 1rem',
         fontSize: '1rem',
@@ -54,7 +59,7 @@ export default function NavBar(){
             <Toolbar>
                 <div className = {classes.toolBar}>
                     <div className = {classes.company}>
-                        <Typography variant="h5" component="h2">
+                        <Typography variant="h5" component="h2" className = 'companyName'>
                             African Marketplace
                         </Typography>
                     </div>
