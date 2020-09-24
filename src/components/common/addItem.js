@@ -39,9 +39,9 @@ const useStyles = makeStyles(theme => ({
 const initialValues = {
   itemName: '',
   description: '',
-  price: undefined,
-  marketId: undefined,
-  productId: undefined,
+  price: '',
+  marketId: '',
+  productId: '',
 };
 
 const initialFormErrors = {
@@ -120,7 +120,7 @@ const AddItem = ({ products, markets }) => {
     axiosWithAuth()
       .post('/item', newItem)
       .then(res => {
-        console.log('AddItem post success', res.data);
+        console.log('AddItem post success', res.header);
         setItem(initialValues);
       })
       .catch(err => console.log('AddItem post failed', err.response));
@@ -190,6 +190,7 @@ const AddItem = ({ products, markets }) => {
             value={item.marketId}
             onChange={handleChange}
           >
+            <MenuItem value="">Select a market</MenuItem>
             {markets.map(market => (
               <MenuItem key={market.marketId} value={market.marketId}>
                 {market.name}
@@ -207,6 +208,7 @@ const AddItem = ({ products, markets }) => {
             value={item.productId}
             onChange={handleChange}
           >
+            <MenuItem value="">Select a product</MenuItem>
             {products.map(product => (
               <MenuItem key={product.product_id} value={product.product_id}>
                 {product.product_name}
