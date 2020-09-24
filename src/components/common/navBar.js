@@ -5,7 +5,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import { Link as RouterLink } from 'react-router-dom';
-import '../common/navBar.css';
+import './navBar.css';
 
 const font = "'Crimson Text', serif;";
 
@@ -59,18 +59,18 @@ export default function NavBar() {
         <div className={classes.toolBar}>
           <div className={classes.companyHolder}>
             <Typography variant="h5" component="h2" className={classes.company}>
-              African Marketplace
-            </Typography>
-          </div>
-          <Typography variant="body2" component="h3" className={classes.nav}>
             <Link
               component={RouterLink}
               color="inherit"
               to="/home"
-              className={classes.link}
+              style = {{textDecoration: "none"}}
+              // className={classes.link}
             >
-              Home
+              African Marketplace
             </Link>
+            </Typography>
+          </div>
+          <Typography variant="body2" component="h3" className={classes.nav}>
             <Link
               component={RouterLink}
               color="inherit"
