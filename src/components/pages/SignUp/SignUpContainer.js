@@ -4,9 +4,7 @@ import Container from '@material-ui/core/Container';
 import RenderSignUp from './RenderSignUp';
 import Time from './timeInZone';
 import schema from './formSchema';
-//import axiosWithAuth from '../../../state/utils/axiosWithAuth';
 import axios from 'axios';
-//import * as yup from 'yup';
 import { useForm } from '../../../hooks/useForm';
 
 const initialValues = {
@@ -16,23 +14,15 @@ const initialValues = {
   password: '',
 };
 
-// const initialFormErrors = {
-//   name: '',
-//   primaryEmail: '',
-//   password: '',
-// };
-
-const initialUsers = [];
 const initialDisabled = true;
 
 const SignUpContainer = () => {
   //states
-  const [users, setUsers] = useState(initialUsers);
   const [formValues, handleChanges, resetForm, setValues, formErrors] = useForm(
     initialValues
   );
   const [disabled, setDisabled] = useState(initialDisabled);
-  // const [formErrors, setFormErrors] = useState(initialFormErrors)
+
 
   //Helpers
   let history = useHistory();
@@ -45,7 +35,6 @@ const SignUpContainer = () => {
         newUser
       )
       .then(res => {
-        //console.log('Results from axios sign-up: ',res);
         localStorage.setItem('token', res.token);
         history.push('/userpage');
         resetForm();
@@ -73,8 +62,6 @@ const SignUpContainer = () => {
     postNewUser(newUser);
     resetForm(initialValues);
   };
-
-  //console.log(formErrors.name);
 
   return (
     <div>

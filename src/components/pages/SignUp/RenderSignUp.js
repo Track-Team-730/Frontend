@@ -21,7 +21,7 @@ export default function RenderSignUp(props) {
   const classes = useStyles();
 
   const { values, change, submit, disabled, formErrors } = props;
-  //console.log(formErrors);
+  
   return (
     <div>
       <Container maxWidth="md" className={classes.root} xs={12}>
