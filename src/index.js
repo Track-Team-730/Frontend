@@ -17,6 +17,8 @@ import NavBar from './components/common/navBar';
 import { LoginPage } from './components/pages/Login';
 import { LandingPage } from './components/pages/Landing';
 import { SignUpPage } from './components/pages/SignUp';
+import './index.css';
+
 const store = createStore(userReducer, applyMiddleware(thunk, logger));
 ReactDOM.render(
   <Router>
@@ -45,10 +47,14 @@ function App() {
         <Route path="/login" component={LoginPage} />
         <Route path="/signup" component={SignUpPage} />
         <Route path="/landing" component={LandingPage} />
-        <Route path="/home" component={() => { 
-        window.location.href = 'https://african-marketplace-730.netlify.app/'; 
-        return null;
-        }} />
+        <Route
+          path="/home"
+          component={() => {
+            window.location.href =
+              'https://african-marketplace-730.netlify.app/';
+            return null;
+          }}
+        />
         <Route path="/" exact component={LandingPage} />
         {/* <Route path="/login" component={LoginPage} />
       <Route path="/landing" component={LandingPage} /> */}
