@@ -7,14 +7,17 @@ import Link from '@material-ui/core/Link';
 // import { MemoryRouter as Router } from 'react-router';
 import { Link as RouterLink } from 'react-router-dom';
 //import Button from '@material-ui/core/Button';
+import '../common/navBar.css';
 // const LinkToLogin = React.forwarRef((props, red) => (
 //     <RouterLink ref={ref} to='/login' {...props} />
 // ));
+const font = "'Crimson Text', serif;";
+
 const useStyles = makeStyles({
     appBar: {
         margin: '0 0 1rem',
         backgroundColor: '#C36',
-        fontFamily: 'monospace',
+        fontFamily: font,
     },
     toolBar: {
         border: '1px solid grey',
@@ -25,6 +28,7 @@ const useStyles = makeStyles({
     company: {
         border: '1px solid grey',
         padding: '.5rem 1rem',
+        fontFamily: font,
     },
     nav: {
        border: '3px solid grey',
@@ -53,8 +57,8 @@ export default function NavBar(){
         <AppBar position = 'static' className= {classes.appBar}>
             <Toolbar>
                 <div className = {classes.toolBar}>
-                    <div className = {classes.company}>
-                        <Typography variant="h5" component="h2">
+                    <div>
+                        <Typography variant="h5" component="h2" className = {classes.company}>
                             African Marketplace
                         </Typography>
                     </div>
