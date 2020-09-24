@@ -1,14 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@1,700&display=swap');
 
 *{
-    font: inherit,
+    max-width: 100%;
 }
 
-/* h1, h2, h3, h4, h5, h6 {
-  font-family: "Crimson Text", serif;
-  color: blue;
-} */
-
-/* .MuiTypography-h5 {
-    font-family: "Crimson Text", sans-serif;
-} */
