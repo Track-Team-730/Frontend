@@ -24,7 +24,7 @@ const UserPage = ({ getData }) => {
 
   useEffect(() => {
     getUserItems();
-  }, []);
+  }, [userItemsList]);
 
   return (
     <>
