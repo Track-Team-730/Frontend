@@ -14,8 +14,15 @@ import MenuItem from '@material-ui/core/MenuItem';
 const useStyles = makeStyles({
   //need to find out if there are other styles attached to root, and then plug flexgrow in properly.
   root: {
-    // flexGrow: 1,
-    width: 345,
+    width: 200,
+  },
+  gridRoot: {
+    root: {
+      flexGrow: 1,
+    },
+    // control: {
+    //   padding: theme.spacing(2),
+    // },
   },
 });
 
@@ -36,17 +43,16 @@ const PriceComparison = ({
 
   const handleChange = e => {
     e.persist();
-    // inputChange(e);
     setProductCompared(e.target.value);
   };
 
   return (
     <div>
-      <h1>Price Comparisons!</h1>
+      <h1>Compare current prices:</h1>
       <TextField
         id="select-product"
         select
-        label="Select"
+        label="Click here"
         helperText="Select product"
         variant="outlined"
         name="productCompatred"
@@ -61,18 +67,13 @@ const PriceComparison = ({
         ))}
       </TextField>
       {priceCompsWarning ? priceCompsWarning : null}
-      <Grid container className={classes.root} spacing={2}>
+      <Grid container className={classes.gridRoot} spacing={2}>
         <Grid item xs={12}>
           <Grid container justify="center" spacing={2}>
-            {/* {items.map(item => (
-              <Grid key={item.itemId} item>
-                <ItemCard item={item} key={item.itemId} />
-              </Grid>
-            ))} */}
             {priceComps
               ? priceComps.map(priceComp => (
                   // need to give each of these a unique key. how do I use the index number as a key?
-                  <Grid key={priceComp.udate} item>
+                  <Grid key={Math.random()} item>
                     <Card className={classes.root}>
                       <CardActionArea>
                         <CardContent>
@@ -91,7 +92,6 @@ const PriceComparison = ({
                               Wholesale:{priceComp.currency}{' '}
                               {priceComp.wholesale}
                               <br />
-                              {/* Available at {priceComp.market} <br /> */}
                               Source: {priceComp.source} <br />
                               Posted: {priceComp.date}
                             </Typography>
@@ -102,7 +102,6 @@ const PriceComparison = ({
                   </Grid>
                 ))
               : null}
-            ;
           </Grid>
         </Grid>
       </Grid>
