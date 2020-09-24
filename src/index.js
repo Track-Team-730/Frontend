@@ -45,10 +45,11 @@ function App() {
         <Route path="/login" component={LoginPage} />
         <Route path="/signup" component={SignUpPage} />
         <Route path="/landing" component={LandingPage} />
-        <Route path="/" exact component={() => { 
-     window.location.href = 'https://african-marketplace-730.netlify.app/'; 
-     return null;
-}} />
+        <Route path="/home" component={() => { 
+        window.location.href = 'https://african-marketplace-730.netlify.app/'; 
+        return null;
+        }} />
+        <Route path="/" exact component={LandingPage} />
         {/* <Route path="/login" component={LoginPage} />
       <Route path="/landing" component={LandingPage} /> */}
         {/* any of the routes you need secured should be registered as SecureRoutes */}

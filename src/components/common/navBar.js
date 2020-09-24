@@ -66,7 +66,7 @@ export default function NavBar() {
             <Link
               component={RouterLink}
               color="inherit"
-              to="/"
+              to="/home"
               className={classes.link}
             >
               Home
