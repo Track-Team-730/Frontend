@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
+
 import { connect } from 'react-redux';
 
 const useStyles = makeStyles(theme => ({
@@ -69,7 +70,7 @@ const UserItemsListed = ({ updateItems, userItemsList, products, markets }) => {
         // console.log('patch success', res.headers);
         updateItems([
           ...userItemsList.map(item => {
-            if (item.id === itemToEdit.id) {
+            if (item.itemId === itemToEdit.itemId) {
               return itemToEdit;
             } else {
               return item;
@@ -83,33 +84,34 @@ const UserItemsListed = ({ updateItems, userItemsList, products, markets }) => {
       });
   };
 
-  const deleteItem = item => {
+  const deleteItem = itemId => {
+    console.log('this is the item to delete', itemId);
     axiosWithAuth()
-      .delete(`/item/${item.id}`)
+      .delete(`/item/${itemId}`)
       .then(res => {
-        updateItems(userItemsList.filter(item => item.id !== res.data));
+        updateItems(userItemsList.filter(item => item.itemId !== res.data));
       })
       .catch(err => console.log(err));
   };
 
   return (
     <>
-      <h1>Here's the items you currently have for sale!</h1>
+      <h2>Here's the items you currently have for sale!</h2>
       <ul>
         {userItemsList.map(item => (
-          <li key={item.itemId} onClick={() => editItem(item)}>
+          <ul key={item.itemId} onClick={() => editItem(item)}>
             <span>
               <span
                 onClick={e => {
                   e.stopPropagation();
-                  deleteItem(item);
+                  deleteItem(item.itemId);
                 }}
               >
-                X delete
+                delete item
               </span>{' '}
               {item.name}
             </span>
-          </li>
+          </ul>
         ))}
       </ul>
 
